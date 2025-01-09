@@ -1,12 +1,12 @@
-import numpy as np
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel, QDialog, QGridLayout, QGraphicsScene, QGraphicsView
 
 from PIL import Image, ImageDraw, ImageFont
-from PIL.ImageQt import ImageQt
+
+from PyQt5.QtGui import QPixmap, QImage
+from PIL import Image
 
 import shutil
 
@@ -220,10 +220,13 @@ class ImageWindow(QDialog):
             text = ImagesWork.text_for_class(class_id)
             text_position = (top_left[0], top_left[1] - 20)
             font = ImageFont.load_default()
-            draw.text(text_position, 'fire', fill=color, font=font)
+            draw.text(text_position, text, fill=color, font=font)
 
         image = image.convert("RGBA")
-        pix = QtGui.QPixmap.fromImage(ImageQt(image))
+        data = image.tobytes("raw", "RGBA")
+        qim = QImage(data, image.width, image.height, QImage.Format_RGBA8888)
+        pix = QPixmap.fromImage(qim)
+
         self.pixmap_YOLO = pix
 
     def add_blur(self):

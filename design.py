@@ -94,6 +94,7 @@ class Ui_MainWindow(object):
         self.images = []
         self.current_page = 0
         self.images_per_page = 50
+        self.folder = ''
 
         self.button_firstPage.clicked.connect(self.show_first_page)
         self.button_PrevPage.clicked.connect(self.show_previous_page)
@@ -103,14 +104,16 @@ class Ui_MainWindow(object):
 
     def load_images(self, current=0):
         #folder = 'D:/Рабочий стол/train/images'
-        folder = QFileDialog.getExistingDirectory(self, "Select Directory")
+        if self.folder == '':
+            self.folder = QFileDialog.getExistingDirectory(self, "Select Directory")
 
-        if folder:
-            self.images = [os.path.join(folder, f) for f in os.listdir(folder) if
+        if self.folder:
+            self.images = [os.path.join(self.folder, f) for f in os.listdir(self.folder) if
                            f.lower().endswith(('.jpg', '.png', '.jpeg'))]
             self.current_page = current
             self.update_image_preview()
-            self.label_directory.setText(folder)
+            self.label_directory.setText(self.folder)
+
 
     def update_image_preview(self):
         self.clear_image_layout()
@@ -125,6 +128,7 @@ class Ui_MainWindow(object):
             # pixmap = QPixmap(img_path)
             pixmap = ImagesWork.load_image(img_path)
             label.setPixmap(pixmap.scaled(200, 200, Qt.KeepAspectRatio))
+
             label.mousePressEvent = lambda event, path=img_path: self.open_image(path)
 
             row = index // 3

@@ -40,9 +40,9 @@ def color_for_class(class_id):
     """ Цвет в соответствии с классом для YOLO """
 
     if class_id == 0:
-        s = 'red'
+        s = 'blue'
     elif class_id == 1:
-        s = 'yellow'
+        s = 'purple'
     else:
         s = 'green'
     return s

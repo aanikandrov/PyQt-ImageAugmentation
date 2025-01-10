@@ -98,7 +98,6 @@ class ImageWindow(QDialog):
         self.check_blur.stateChanged.connect(self.add_blur)
         self.check_rotate90.stateChanged.connect(self.add_rotate90)
 
-
         self.push_save.clicked.connect(self.create_augmentations)
         self.push_close.clicked.connect(self.close)
         self.push_YOLO.clicked.connect(self.change_image_to_YOLO)
@@ -215,7 +214,7 @@ class ImageWindow(QDialog):
 
             draw = ImageDraw.Draw(image)
             color = ImagesWork.color_for_class(class_id)
-            draw.rectangle((top_left, bottom_right), outline=color, width=5)
+            draw.rectangle((top_left, bottom_right), outline=color, width=6)
 
             text = ImagesWork.text_for_class(class_id)
             text_position = (top_left[0], top_left[1] - 20)
